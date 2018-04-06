@@ -2,13 +2,9 @@ package br.com.pedido.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,31 +21,31 @@ import br.com.pedido.domain.enums.TipoCliente;
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "NU_CLIENTE", unique = true)
 	private Integer id;
-	
+
 	@Column(name = "NO_CLIENTE", length = 255, nullable = false)
 	private String nomeCliente;
-	
+
 	@Column(name = "DE_EMAIL", length = 255, unique = true, nullable = false)
 	private String email;
-	
+
 	@Column(name = "CO_CPF_CNPJ", length = 14, unique = true, nullable = false)
 	private String cpfCnpj;
-	
+
 	@Column(name = "TP_PESSOA", length = 1, unique = true, nullable = false)
 	private String tipo;
-	
+
 	@JsonManagedReference
-	@OneToMany(mappedBy="cliente")	
+	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
-	@ElementCollection
-	@CollectionTable(name="TB_TELEFONE")
-	private Set<String> telefones = new HashSet<>();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "clientes")
+	private List<Telefone> telefones = new ArrayList<>();
 
 	public Cliente() {
 
@@ -108,15 +104,11 @@ public class Cliente implements Serializable {
 		return enderecos;
 	}
 
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
-	public Set<String> getTelefones() {
+	public List<Telefone> getTelefones() {
 		return telefones;
 	}
 
-	public void setTelefones(Set<String> telefones) {
+	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
 

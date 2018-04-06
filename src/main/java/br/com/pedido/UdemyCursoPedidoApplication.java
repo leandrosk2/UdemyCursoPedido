@@ -13,6 +13,7 @@ import br.com.pedido.domain.Cliente;
 import br.com.pedido.domain.Endereco;
 import br.com.pedido.domain.Estado;
 import br.com.pedido.domain.Produto;
+import br.com.pedido.domain.Telefone;
 import br.com.pedido.domain.enums.TipoCliente;
 import br.com.pedido.repositeries.CategoriaRepository;
 import br.com.pedido.repositeries.CidadeRepository;
@@ -20,6 +21,7 @@ import br.com.pedido.repositeries.ClienteRepository;
 import br.com.pedido.repositeries.EnderecoRepository;
 import br.com.pedido.repositeries.EstadoRepository;
 import br.com.pedido.repositeries.ProdutoRepository;
+import br.com.pedido.repositeries.TelefoneRepository;
 
 @SpringBootApplication
 public class UdemyCursoPedidoApplication implements CommandLineRunner {
@@ -40,6 +42,9 @@ public class UdemyCursoPedidoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private TelefoneRepository telefoneRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(UdemyCursoPedidoApplication.class, args);
@@ -79,15 +84,17 @@ public class UdemyCursoPedidoApplication implements CommandLineRunner {
 		
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 		
-		cli1.getTelefones().addAll(Arrays.asList("27363323","93838393"));
+		Telefone tel1 = new Telefone(null, "61", "55", "27363323",cli1);
+		Telefone tel2 = new Telefone(null, "61", "55", "93838393",cli1);
 		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		cli1.getTelefones().addAll(Arrays.asList(tel1,tel2));
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
-		
+		telefoneRepository.saveAll(Arrays.asList(tel1,tel2));
 	}
 }
