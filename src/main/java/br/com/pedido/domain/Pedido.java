@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "TB_PEDIDO")
 public class Pedido implements Serializable {
@@ -32,6 +34,7 @@ public class Pedido implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TS_PEDIDO", nullable = false)
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
 
 	@ManyToOne

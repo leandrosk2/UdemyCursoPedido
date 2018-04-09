@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -13,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.pedido.domain.enums.EstadoPagamento;
 
@@ -24,13 +24,13 @@ public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "NU_PAGAMENTO", unique = true)
 	private Integer id;
 
 	@Column(name = "NU_ESTADO_PAGAMENTO", nullable = false)
 	private Integer estado;
 
+	@JsonIgnore
 	@JoinColumn(name = "NU_PEDIDO")
 	@OneToOne
 	@MapsId
